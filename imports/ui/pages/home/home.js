@@ -7,6 +7,7 @@ import '../../components/chart/hashvalues.js';
 
 import '../../components/dictionary.js';
 import '../../components/pepperandsalt.js';
+import '../../components/links.js';
 
 Template.App_home.events({
 
