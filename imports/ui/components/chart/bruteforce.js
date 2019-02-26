@@ -4,13 +4,18 @@ var stopWatchRunning = false;
 var startTime;
 var currentdate;
 
+var calcData;
+
+
 Template.bruteforce.onCreated(function () {
     registerClock();
 })
 
 Template.bruteforce.helpers({
     values() {
-        return Template.instance().isStopWatchRunning.get();
+        if (Template.instance().isStopWatchRunning) {
+            return Template.instance().isStopWatchRunning.get();
+        }
     },
 
     permutations() {
@@ -26,6 +31,7 @@ Template.bruteforce.events({
         if (stopWatchRunning == false) {
             startTime = new Date();
             stopWatchRunning = true;
+            displayCombinations();
         } else {
             stopWatchRunning = false;
         }
@@ -51,9 +57,9 @@ function setStopWatch() {
         return;
     }
     var duration = new Date(currentdate - startTime);
-    var showDuration = duration.getHours() - 1 + ":"
-        + duration.getMinutes() + ":"
-        + duration.getSeconds();
+    var showDuration = duration.getHours() - 1 + ":" +
+        duration.getMinutes() + ":" +
+        duration.getSeconds();
     $("#timer").text(showDuration);
 }
 
@@ -83,32 +89,64 @@ function getCombinationCount() {
 
 }
 
+function resetCalcObject() {
+
+    let numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    let smallChars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    let bigChars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    let specialChars = [" ", "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+",",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"];
+    let umlauts = ["ä", "Ä", "ö", "Ö", "ü", "Ü", "ß"];
+
+    let possibleChars = [];
+
+    if ($("#yNumbers").prop('checked')) {
+        possibleChars = possibleChars.concat(numbers);
+    }
+    if ($("#ysmallChar").prop('checked')) {
+        possibleChars = possibleChars.concat(smallChars);
+    }
+    if ($("#ybigChar").prop('checked')) {
+        possibleChars = possibleChars.concat(bigChars);
+    }
+    if ($("#yspecialChar").prop('checked')) {
+        possibleChars = possibleChars.concat(specialChars);
+    }
+    if ($("#ygermanUmlaut").prop('checked')) {
+        possibleChars = possibleChars.concat(umlauts);
+    }
+
+    $("#xChar").val(possibleChars.length);
+
+    calcData = {};
+    calcData.maxPasswordLength = Session.get("password").length;
+    calcData.possibleChars = possibleChars;
+    calcData.index = 0;
+
+}
+
 /* display all possible password combinations*/
 
 function displayCombinations() {
 
-    let possibleChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a"];
-
-    let length = possibleChars.length;
-    var maxPasswordLength = 2;
-    var index = 0;
+    resetCalcObject();
 
     let parrentChars = "";
 
     loopCurrentChar(parrentChars);
-
-    $("div").text(index);
-
+    $("#xComb").val(calcData.index);
 }
 
 function loopCurrentChar(parentChars) {
 
-    if (parentChars.length < maxPasswordLength) {
+    if (parentChars.length < calcData.maxPasswordLength) {
 
-        for (let i = 0; i < length; i++) {
-            index++;
-            parrentChars = parentChars + possibleChars[i];
-            //console.log((index++) + "|" + parrentChars);
+        for (let i = 0; i < calcData.possibleChars.length; i++) {
+            calcData.index++;
+            parrentChars = parentChars + calcData.possibleChars[i];
+            //console.log((calcData.index) + "|" + parrentChars);
+            if (Session.get("password") === parrentChars) {
+                $("#xTry").val(calcData.index);
+            }
             //jump to next char
             loopCurrentChar(parrentChars);
         }

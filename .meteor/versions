@@ -2,7 +2,6 @@ accounts-base@1.4.3
 accounts-password@1.5.1
 accounts-ui@1.3.1
 accounts-ui-unstyled@1.4.2
-aldeed:template-extension@3.1.1
 allow-deny@1.1.0
 autoupdate@1.5.0
 babel-compiler@7.2.4
@@ -18,7 +17,6 @@ caching-html-compiler@1.1.3
 callback-hook@1.1.0
 chart:chart@1.0.1-beta.4
 check@1.3.1
-coffeescript@1.0.17
 ddp@1.4.0
 ddp-client@2.3.3
 ddp-common@1.4.0
@@ -35,7 +33,6 @@ ejson@1.1.0
 email@1.2.3
 es5-shim@4.8.0
 fetch@0.1.0
-gadicohen:famous-views@0.1.27
 geojson-utils@1.0.10
 hot-code-push@1.0.4
 html-tools@1.0.11
@@ -43,7 +40,6 @@ htmljs@1.0.11
 http@1.4.2
 id-map@1.1.0
 inter-process-messaging@0.1.0
-jag:pince@0.0.6
 johanbrook:publication-collector@1.1.0
 jquery@1.11.11
 kadira:blaze-layout@2.3.0
@@ -89,7 +85,6 @@ session@1.2.0
 sha@1.0.9
 shell-server@0.4.0
 socket-stream-client@0.2.2
-softwarerero:accounts-t9n@1.3.11
 spacebars@1.0.15
 spacebars-compiler@1.1.3
 srp@1.0.12
@@ -103,9 +98,5 @@ tracker@1.2.0
 ui@1.0.13
 underscore@1.0.10
 url@1.2.0
-useraccounts:core@1.14.2
-useraccounts:famous-wrapper@1.13.1
-useraccounts:materialize@1.14.2
-useraccounts:unstyled@1.14.2
 webapp@1.7.2
 webapp-hashing@1.0.9
