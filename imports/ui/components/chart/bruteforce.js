@@ -1,22 +1,12 @@
 import './bruteforce.html';
 
-var stopWatchRunning = false;
-var startTime;
-var currentdate;
-
 var calcData;
 
 
-Template.bruteforce.onCreated(function () {
-    registerClock();
-})
+Template.bruteforce.onCreated(function () {})
 
 Template.bruteforce.helpers({
-    values() {
-        if (Template.instance().isStopWatchRunning) {
-            return Template.instance().isStopWatchRunning.get();
-        }
-    },
+
 
     permutations() {
         //return getAllPermutations(Session.get("password"));
@@ -26,43 +16,20 @@ Template.bruteforce.helpers({
 
 Template.bruteforce.events({
 
-    'click #stopwatch'(event, template) {
+    /*    'click #stopwatch'(event, template) {
+           displayCombinations();
+       } */
 
-        if (stopWatchRunning == false) {
-            startTime = new Date();
-            stopWatchRunning = true;
-            displayCombinations();
-        } else {
-            stopWatchRunning = false;
-        }
+    'mousedown #stopwatch'(event, template) {
+        $('#timer').html('<img src="http://i246.photobucket.com/albums/gg102/holoverse/ajax-loader.gif" border="0" alt=" photo ajax-loader.gif"/>').css('background', '#fff').css('color', '#000');
+    },
+
+    'mouseup #stopwatch'(event, template) {
+        displayCombinations();
     }
+
+
 });
-
-
-function setTime() {
-    currentdate = new Date();
-}
-
-function registerClock() {
-    setInterval(updateClock, 250);
-}
-
-function updateClock() {
-    setTime();
-    setStopWatch();
-}
-
-function setStopWatch() {
-    if (stopWatchRunning == false) {
-        return;
-    }
-    var duration = new Date(currentdate - startTime);
-    var showDuration = duration.getHours() - 1 + ":" +
-        duration.getMinutes() + ":" +
-        duration.getSeconds();
-    $("#timer").text(showDuration);
-}
-
 
 function getAllPermutations(string) {
     var results = [];
@@ -94,7 +61,7 @@ function resetCalcObject() {
     let numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     let smallChars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
     let bigChars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-    let specialChars = [" ", "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+",",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"];
+    let specialChars = [" ", "!", "\"", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "_", "`", "{", "|", "}", "~"];
     let umlauts = ["ä", "Ä", "ö", "Ö", "ü", "Ü", "ß"];
 
     let possibleChars = [];
@@ -115,12 +82,19 @@ function resetCalcObject() {
         possibleChars = possibleChars.concat(umlauts);
     }
 
-    $("#xChar").val(possibleChars.length);
+    $("#bfChar").val(possibleChars.length);
 
     calcData = {};
     calcData.maxPasswordLength = Session.get("password").length;
     calcData.possibleChars = possibleChars;
     calcData.index = 0;
+    calcData.startTime = new Date();
+
+    /* calcData.timerOverall = window.setInterval(function () {
+        document.getElementById("timer").innerHTML = (new Date() - calcData.startTime);
+    }, 1); */
+
+    $("#bfTimeAll").val((new Date() - calcData.startTime) / 1000);
 
 }
 
@@ -128,12 +102,18 @@ function resetCalcObject() {
 
 function displayCombinations() {
 
+    $("[id^=bf]").val("0");
     resetCalcObject();
 
     let parrentChars = "";
 
     loopCurrentChar(parrentChars);
-    $("#xComb").val(calcData.index);
+
+    //clearInterval(calcData.timerOverall);
+
+    $("#bfComb").val(calcData.index);
+    $("#bfTimeAll").val((new Date() - calcData.startTime) / 1000);
+    $('#timer').html("<p>Done...</p>");
 }
 
 function loopCurrentChar(parentChars) {
@@ -143,9 +123,11 @@ function loopCurrentChar(parentChars) {
         for (let i = 0; i < calcData.possibleChars.length; i++) {
             calcData.index++;
             parrentChars = parentChars + calcData.possibleChars[i];
+
             //console.log((calcData.index) + "|" + parrentChars);
             if (Session.get("password") === parrentChars) {
-                $("#xTry").val(calcData.index);
+                $("#bfTry").val(calcData.index);
+                $("#bfTime").val((new Date() - calcData.startTime) / 1000);
             }
             //jump to next char
             loopCurrentChar(parrentChars);

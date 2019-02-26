@@ -74,6 +74,11 @@
             <input class="w3-input w3-border" id="password" name="password" type="password" disabled placeholder="Wähle Dein Passwort!">
           </div>
         </div>
+
+        <div class="w3-row w3-section">
+          {{> pawned}}
+        </div>
+
       </div>
     </div>
 
@@ -96,15 +101,15 @@
           </div>
         </div>
         <div class="w3-row-padding">
-            <div class="w3-third">
-              <label>Sonderzeichen</label>
-              <input class="w3-input w3-border" type="number" disabled value="0">
-            </div>
-            <div class="w3-third">
-              <label>Umlaute</label>
-              <input class="w3-input w3-border" type="number" disabled value="0">
-            </div>
+          <div class="w3-third">
+            <label>Sonderzeichen</label>
+            <input class="w3-input w3-border" type="number" disabled value="0">
           </div>
+          <div class="w3-third">
+            <label>Umlaute</label>
+            <input class="w3-input w3-border" type="number" disabled value="0">
+          </div>
+        </div>
 
       </div>
       <div class="w3-container w3-card-4 w3-white w3-margin w3-padding-large">
@@ -129,13 +134,14 @@
         <h2>Offene Fragen</h2>
         <div>Wie beinflusst die erzwungene Anzahl von Zeichen aus bestimmten Zeichenvorräten die möglichen
           Kombinationen?</div>
+        <div>Warum ist die Anzahl der Kombinationen unterschiedlich?</div>
       </div>
     </div>
 
   </div>
 
   <div class="w3-row ">
-    
+
     <div class="w3-half">
       <div class="w3-container w3-card-4 w3-white w3-center w3-margin w3-padding-large">
         <h2>BruteForce (Ausprobieren)</h2>
@@ -144,12 +150,12 @@
       </div>
     </div>
     <div class="w3-half">
-        <div class="w3-container w3-card-4 w3-white w3-center w3-margin w3-padding-large">
-          <h2>Hashwerte</h2>
-          <hr>
-          <p>{{> hashvalues}}</p>
-        </div>
+      <div class="w3-container w3-card-4 w3-white w3-center w3-margin w3-padding-large">
+        <h2>Hashwerte</h2>
+        <hr>
+        <p>{{> hashvalues}}</p>
       </div>
+    </div>
   </div>
 
   <div class="w3-row ">
