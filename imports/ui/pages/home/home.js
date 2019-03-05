@@ -19,6 +19,7 @@ Template.App_home.events({
   'input #password'(event, template) {
 
     verifyPasswordPolicy(event.currentTarget.value);
+    checkPasswordPolicy();
 
   },
 
@@ -26,7 +27,7 @@ Template.App_home.events({
 
     //visibility of password policy
     $("#z" + event.currentTarget.id.substring(1)).prop('disabled', !event.currentTarget.checked);
-    event.currentTarget.checked ? $($("#z" + event.currentTarget.id.substring(1)).parent()).css('visibility', 'visible') : $($("#z" + event.currentTarget.id.substring(1)).parent()).css('visibility', 'hidden');
+    $($("#z" + event.currentTarget.id.substring(1)).parent()).toggle();
     checkPasswordPolicy();
 
     //activate input if at least one character is set selected
@@ -40,7 +41,16 @@ Template.App_home.events({
     checkPasswordPolicy();
   },
 
-
+  'click #eye'(event, template) {
+    let elem = $("#eye");
+    if ($(elem).hasClass("fa-eye-slash")) {
+      $(elem).removeClass("fa-eye-slash").addClass("fa-eye");
+      $("#password").prop("type", "password");
+    } else {
+      $(elem).removeClass("fa-eye").addClass("fa-eye-slash");
+      $("#password").prop("type", "text");
+    };
+  }
 
 });
 
@@ -72,53 +82,69 @@ function verifyPasswordPolicy(pwdValue) {
   //numbers check
   $("#xNumbers").val(pwdValue.replace(/\D/g, '').length);
 
-  /* 
-   s.replace(/\D/g, '').length
-
-    if ($("#yNumbers").prop('disabled', false)) {
-      if (/[0-9]/.test(pwdValue)) {
-        $("#yNumbers").siblings().css("color", "green");
-      }
-    }
-    //small char check
-    if ($("#ysmallChar").prop('disabled', false)) {
-      if (/[a-z]/.test(pwdValue)) {
-        $("#ysmallChar").siblings().css("color", "green");
-      }
-    }
-    //bigchar check
-    if ($("#ybigChar").prop('disabled', false)) {
-      if (/[a-z]/.test(pwdValue)) {
-        $("#ybigChar").siblings().css("color", "green");
-      }
-    } */
-  /* 
-    if (/[a-z]/.test(string)) {
-        // If string contain at least one lowercase alphabet character
-        counter++;
-    }
-    if (/[A-Z]/.test(string)) {
-        counter++;
-    }
-    if (/[0-9]/.test(string)) {
-        counter++;
-    }
-    if (/[!@#$&*]/.test(string)) {
-        counter++;
-    } */
 
   Session.set("password", pwdValue);
 }
 
 
 function checkPasswordPolicy() {
+
   let amount = 0;
   $(".pwdPolicy").each(function () {
     if (!$(this).prop('disabled')) {
       amount = amount + parseInt($(this).val());
     }
   });
+
+  if (amount <= 6 ) {
+    $("#amountDiv").removeClass("w3-yellow").removeClass("w3-green");
+    $("#amountDiv").addClass("w3-red");
+  }
+
+  if (amount > 6) {
+    $("#amountDiv").removeClass("w3-red").removeClass("w3-green");
+    $("#amountDiv").addClass("w3-yellow");
+  }
+
+  if (amount > 8) {
+    $("#amountDiv").removeClass("w3-red").removeClass("w3-yellow");
+    $("#amountDiv").addClass("w3-green");
+  }
+
+
+  let checkPwd;
+  checkPwd = Session.get("password").replace(/\D/g, '');
+  checkSpecialPolicy(checkPwd.length, $("#zNumbers"));
+
+  checkPwd = Session.get("password").match(/[a-z]/g);
+  if (checkPwd) {
+    checkSpecialPolicy(checkPwd.length, $("#zsmallChar"));
+  }
+
+  checkPwd = Session.get("password").match(/[A-Z]/g);
+  if (checkPwd) {
+    checkSpecialPolicy(checkPwd.length, $("#zbigChar"));
+  }
+
   Session.set("minCharacterAmount", amount);
+}
+
+function checkSpecialPolicy(length, element) {
+  let checkPwd, checkPolicy;
+
+  //numbers check
+  checkPolicy = parseInt($(element).val());
+
+  if (checkPolicy > 0) {
+    if (length > 0 && length >= checkPolicy) {
+      $(element).parent().removeClass("w3-red").addClass("w3-green");
+    } else {
+      $(element).parent().removeClass("w3-green").addClass("w3-red");
+    }
+  } else {
+    //set input to neutral
+    $(element).parent().removeClass("w3-green").removeClass("w3-red");
+  }
 }
 
 /* check which character set is selected and display combinations*/

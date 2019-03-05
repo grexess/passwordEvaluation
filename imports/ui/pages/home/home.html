@@ -7,71 +7,81 @@
     <div class="w3-half">
       <div class="w3-container w3-card-4 w3-light-grey w3-margin">
         <h2>Wähle Dein Passwort</h2>
-        <div class="w3-row-padding">
-          <div class="w3-half">
-            <div class="w3-container w3-card-4">
-              <h2>Zeichensatz</h2>
-              <p>
-                <input id="yNumbers" class="w3-check" type="checkbox">
-                <label>Zahlen</label>
-                <label>[0-9]</label>
-              </p>
-              <p>
-                <input id="ysmallChar" class="w3-check" type="checkbox">
-                <label>Kleinbuchstaben</label>
-                <label>[a-z]</label>
-              </p>
-              <p>
-                <input id="ybigChar" class="w3-check" type="checkbox">
-                <label>Grossbuchstaben</label>
-                <label>[A-Z]</label>
-              </p>
-              <p>
-                <input id="yspecialChar" class="w3-check" type="checkbox">
-                <label>Sonderzeichen</label>
-                <label>[ !"#$%&'()*+,-./:;&lt;=>?@[\]^_`{|}~]</label>
-              </p>
-              <p>
-                <input id="ygermanUmlaut" class="w3-check" type="checkbox">
-                <label>Umlaute</label>
-                <label>[&auml;,&Auml;,&ouml;,&Ouml;,&uuml;,&Uuml;,&szlig;]</label>
-              </p>
-            </div>
-          </div>
-          <div class="w3-half">
-            <div class="w3-container w3-card-4">
-              <h2>Passwortregeln</h2>
-              <p style="visibility:hidden">
-                <input id="zNumbers" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
+        <div class="w3-row w3-margin">
+
+          <div class="w3-container w3-card-4">
+            <h2>Zeichensatz</h2>
+            <p>
+              <input id="yNumbers" class="w3-check" type="checkbox">
+              <label>Zahlen</label>
+              <label>[0-9]</label>
+            </p>
+
+            <p class="w3-animate-zoom w3-container w3-card-4 w3-padding" style="display:none">
+              <input id="zNumbers" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
+              <label>Minimum Zahlen</label>
+            </p>
+
+            <p>
+              <input id="ysmallChar" class="w3-check" type="checkbox">
+              <label>Kleinbuchstaben</label>
+              <label>[a-z]</label>
+            </p>
+            <p class="w3-animate-zoom w3-container w3-card-4 w3-padding" style="display:none">
+                <input id="zsmallChar" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
                 <label>Minimum Zahlen</label>
               </p>
-              <p style="visibility:hidden">
-                <input id="zsmallChar" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
-                <label>Minimum Kleinbuchstaben</label>
-              </p>
-              <p style="visibility:hidden">
+            <p>
+              <input id="ybigChar" class="w3-check" type="checkbox">
+              <label>Grossbuchstaben</label>
+              <label>[A-Z]</label>
+            </p>
+            <p class="w3-animate-zoom w3-container w3-card-4 w3-padding" style="display:none">
                 <input id="zbigChar" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
-                <label>Minimum Grossbuchstaben</label>
+                <label>Minimum Zahlen</label>
               </p>
-              <p style="visibility:hidden">
-                <input id="zspecialChar" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
-                <label>Minimum Sonderzeichen</label>
-              </p>
-              <p style="visibility:hidden">
-                <input id="zgermanUmlaut" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
-                <label>Minimum Umlaute</label>
-              </p>
+            <p>
+              <input id="yspecialChar" class="w3-check" type="checkbox">
+              <label>Sonderzeichen</label>
+              <label>[ !"#$%&'()*+,-./:;&lt;=>?@[\]^_`{|}~]</label>
+            </p>
+            <p class="w3-animate-zoom" style="display:none">
+              <input id="zspecialChar" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
+              <label>Minimum Sonderzeichen</label>
+            </p>
+            <p>
+              <input id="ygermanUmlaut" class="w3-check" type="checkbox">
+              <label>Umlaute</label>
+              <label>[&auml;,&Auml;,&ouml;,&Ouml;,&uuml;,&Uuml;,&szlig;]</label>
+            </p>
+            <p class="w3-animate-zoom" style="display:none">
+              <input id="zgermanUmlaut" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
+              <label>Minimum Umlaute</label>
+            </p>
+            <div id="amountDiv" class="w3-container w3-card-4 w3-red w3-margin-bottom">
               <p>
                 <input id="zAmount" type="number" disabled min="0" max="100" value="{{minCharacterAmount}}">
-                <label>Mindestpasswortlänge</label>
+                <label>Sichere Mindestpasswortlänge</label>
               </p>
             </div>
           </div>
         </div>
-        <div class="w3-row w3-section">
-          <div class="w3-col" style="width:50px"><i class="w3-xxlarge fas fa-key"></i></div>
-          <div class="w3-rest">
-            <input class="w3-input w3-border" id="password" name="password" type="password" disabled placeholder="Wähle Dein Passwort!">
+
+        <div class="w3-row w3-margin">
+
+        </div>
+
+        <div class="w3-row w3-margin">
+
+          <div class="w3-container w3-card-4 w3-light-blue">
+            <h5>Passwort</h5>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i id="eye" class="w3-xxlarge fas fa-eye"></i></div>
+              <div class="w3-rest">
+                <input class="w3-input w3-border" id="password" name="password" type="password" disabled placeholder="Wähle Dein Passwort!">
+              </div>
+
+            </div>
           </div>
         </div>
 

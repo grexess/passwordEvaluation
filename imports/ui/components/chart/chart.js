@@ -6,7 +6,7 @@ Template.chart.rendered = function () {
 
 function drawChart() {
     var data = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: ["2", "3", "4", "5", "6", "7", "8"],
         datasets: [
             {
                 fillColor: "rgba(220,220,220,0.5)",
