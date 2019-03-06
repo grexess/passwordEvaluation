@@ -102,6 +102,17 @@ function resetCalcObject() {
 
 function displayCombinations() {
 
+    if(Session.get("password").length > 5){
+        Bert.alert({
+            title: 'Achtung!',
+            message: 'Akku fast leer',
+            type: 'info',
+            style: 'growl-top-right',
+            icon: 'fas fa-battery-empty'
+          });
+        return;
+    }
+
     $("[id^=bf]").val("0");
     resetCalcObject();
 
