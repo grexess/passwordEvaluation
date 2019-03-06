@@ -15,20 +15,9 @@ Template.bruteforce.helpers({
 });
 
 Template.bruteforce.events({
-
-    /*    'click #stopwatch'(event, template) {
-           displayCombinations();
-       } */
-
-    'mousedown #stopwatch'(event, template) {
-        $('#timer').html('<img src="http://i246.photobucket.com/albums/gg102/holoverse/ajax-loader.gif" border="0" alt=" photo ajax-loader.gif"/>').css('background', '#fff').css('color', '#000');
-    },
-
     'mouseup #stopwatch'(event, template) {
         displayCombinations();
     }
-
-
 });
 
 function getAllPermutations(string) {
@@ -105,14 +94,15 @@ function displayCombinations() {
     if(Session.get("password").length > 5){
         Bert.alert({
             title: 'Achtung!',
-            message: 'Akku fast leer',
-            type: 'info',
-            style: 'growl-top-right',
-            icon: 'fas fa-battery-empty'
+            message: 'Passwort zu lang für Brute-Force-Demo',
+            type: 'danger',
+            style: 'fixed-top',
+            icon: 'fas fa-times-circle'
           });
         return;
     }
 
+    $('#timer').html('<img src="http://i246.photobucket.com/albums/gg102/holoverse/ajax-loader.gif" border="0" alt=" photo ajax-loader.gif"/>').css('background', '#fff').css('color', '#000');
     $("[id^=bf]").val("0");
     resetCalcObject();
 

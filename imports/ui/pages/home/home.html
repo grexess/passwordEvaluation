@@ -28,24 +28,24 @@
               <label>[a-z]</label>
             </p>
             <p class="w3-animate-zoom w3-container w3-card-4 w3-padding" style="display:none">
-                <input id="zsmallChar" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
-                <label>Minimum Kleinbuchstaben</label>
-              </p>
+              <input id="zsmallChar" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
+              <label>Minimum Kleinbuchstaben</label>
+            </p>
             <p>
               <input id="ybigChar" class="w3-check" type="checkbox">
               <label>Grossbuchstaben</label>
               <label>[A-Z]</label>
             </p>
             <p class="w3-animate-zoom w3-container w3-card-4 w3-padding" style="display:none">
-                <input id="zbigChar" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
-                <label>Minimum Grossbuchstaben</label>
-              </p>
+              <input id="zbigChar" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
+              <label>Minimum Grossbuchstaben</label>
+            </p>
             <p>
               <input id="yspecialChar" class="w3-check" type="checkbox">
               <label>Sonderzeichen</label>
               <label>[ !"#$%&'()*+,-./:;&lt;=>?@[\]^_`{|}~]</label>
             </p>
-            <p class="w3-animate-zoom" style="display:none">
+            <p class="w3-animate-zoom w3-container w3-card-4 w3-padding" style="display:none">
               <input id="zspecialChar" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
               <label>Minimum Sonderzeichen</label>
             </p>
@@ -54,7 +54,7 @@
               <label>Umlaute</label>
               <label>[&auml;,&Auml;,&ouml;,&Ouml;,&uuml;,&Uuml;,&szlig;]</label>
             </p>
-            <p class="w3-animate-zoom" style="display:none">
+            <p class="w3-animate-zoom w3-container w3-card-4 w3-padding" style="display:none">
               <input id="zgermanUmlaut" class="pwdPolicy" disabled type="number" min="0" max="100" value="0">
               <label>Minimum Umlaute</label>
             </p>
@@ -85,69 +85,65 @@
           </div>
         </div>
 
-        <div class="w3-row w3-section">
-          {{> pawned}}
-        </div>
+
 
       </div>
     </div>
 
     <div class="w3-half">
-      <h2>Passwortanalyse</h2>
-      <div class="w3-container w3-card-4 w3-white w3-margin w3-padding-large">
+      <div class="w3-container w3-card-4 w3-light-grey w3-margin">
+        <h2>Passwortanalyse</h2>
+        <div class="w3-container w3-card-4 w3-white w3-margin w3-padding-large">
 
-        <div class="w3-row-padding">
-          <div class="w3-third">
-            <label>Zahlen</label>
-            <input id="xNumbers" class="w3-input w3-border" type="number" disabled value="0">
+          <div class="w3-row-padding">
+            <div class="w3-third">
+              <label>Zahlen</label>
+              <input id="xNumbers" class="w3-input w3-border" type="number" disabled value="0">
+            </div>
+            <div class="w3-third">
+              <label>Kleinbuchstaben</label>
+              <input id="xKleinbuchstaben" class="w3-input w3-border" type="number" disabled value="0">
+            </div>
+            <div class="w3-third">
+              <label>Grossbuchstaben</label>
+              <input id="xGrossbuchstaben" class="w3-input w3-border" type="number" disabled value="0">
+            </div>
           </div>
-          <div class="w3-third">
-            <label>Kleinbuchstaben</label>
-            <input id="xKleinbuchstaben" class="w3-input w3-border" type="number" disabled value="0">
+          <div class="w3-row-padding">
+            <div class="w3-third">
+              <label>Sonderzeichen</label>
+              <input id="xSpecial" class="w3-input w3-border" type="number" disabled value="0">
+            </div>
+            <div class="w3-third">
+              <label>Umlaute</label>
+              <input id="xUmlaute" class="w3-input w3-border" type="number" disabled value="0">
+            </div>
           </div>
-          <div class="w3-third">
-            <label>Grossbuchstaben</label>
-            <input id="xGrossbuchstaben" class="w3-input w3-border" type="number" disabled value="0">
-          </div>
-        </div>
-        <div class="w3-row-padding">
-          <div class="w3-third">
-            <label>Sonderzeichen</label>
-            <input id="xSpecial" class="w3-input w3-border" type="number" disabled value="0">
-          </div>
-          <div class="w3-third">
-            <label>Umlaute</label>
-            <input class="w3-input w3-border" type="number" disabled value="0">
-          </div>
-        </div>
 
-      </div>
-      <div class="w3-container w3-card-4 w3-white w3-margin w3-padding-large">
-        <div class="w3-row-padding">
-          <div class="w3-half">
-            <label>Anzahl möglicher Zeichen</label>
-            <input class="w3-input w3-border" type="text" disabled value="{{characterAmount}}">
+        </div>
+        <div class="w3-container w3-card-4 w3-white w3-margin w3-padding-large">
+          <div class="w3-row-padding">
+            <div class="w3-half">
+              <label>Anzahl möglicher Zeichen</label>
+              <input class="w3-input w3-border" type="text" disabled value="{{characterAmount}}">
+            </div>
+            <div class="w3-half">
+              <label>Passwortlänge</label>
+              <input class="w3-input w3-border" type="text" disabled value="{{length}}">
+            </div>
           </div>
-          <div class="w3-half">
-            <label>Passwortlänge</label>
-            <input class="w3-input w3-border" type="text" disabled value="{{length}}">
+          <div class="w3-row-padding">
+            <div class="w3-padding-small">
+              <label>Kombinationen</label>
+              <input class="w3-input w3-border" type="text" disabled value={{permcount}}>
+            </div>
           </div>
         </div>
-        <div class="w3-row-padding">
-          <div class="w3-padding-small">
-            <label>Kombinationen</label>
-            <input class="w3-input w3-border" type="text" disabled value={{permcount}}>
-          </div>
-        </div>
       </div>
-      <div class="w3-container w3-card-4 w3-white w3-margin w3-padding-large">
-        <h2>Offene Fragen</h2>
-        <div>Wie beinflusst die erzwungene Anzahl von Zeichen aus bestimmten Zeichenvorräten die möglichen
-          Kombinationen?</div>
-        <div>Warum ist die Anzahl der Kombinationen unterschiedlich?</div>
+      <div class="w3-row w3-section">
+        {{> pawned}}
       </div>
     </div>
-
   </div>
 
   <div class="w3-row ">
@@ -173,7 +169,13 @@
       <div class="w3-container w3-card-4 w3-white w3-center w3-margin w3-padding-large">
         <h2>Passwortgenerator</h2>
         <hr>
-        <p></p>
+        <div class="w3-row">
+            <div class="w3-col s3 m3 l3 w3-center"><i id="randomPwd" class="fas fa-dice fa-3x"></i></div>
+            <div class="w3-col s4 m4 l4 w3-center">
+                <p id="randomPWD"></p>
+            </div>
+        </div>
+    
       </div>
     </div>
     <div class="w3-half">
@@ -185,7 +187,7 @@
 
   <div class="w3-row ">
     <div class="w3-half">
-        {{> pepperandsalt}}
+      {{> pepperandsalt}}
     </div>
     <div class="w3-half">
       {{> links}}

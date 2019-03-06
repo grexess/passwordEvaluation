@@ -9,6 +9,8 @@ import '../../components/pepperandsalt.js';
 import '../../components/links.js';
 import '../../components/pawned.js';
 
+RandExp = require('randexp');
+
 Template.App_home.onCreated(function () {
   Session.set("minCharacterAmount", 0);
   Session.set("password", "");
@@ -18,7 +20,9 @@ Template.App_home.events({
 
   'input #password'(event, template) {
 
-    verifyPasswordPolicy(event.currentTarget.value);
+    Session.set("password", event.currentTarget.value);
+
+    verifyPasswordPolicy();
     checkPasswordPolicy();
 
   },
@@ -38,7 +42,10 @@ Template.App_home.events({
   },
 
   'input .pwdPolicy'(event, template) {
+
+    verifyPasswordPolicy();
     checkPasswordPolicy();
+
   },
 
   'click #eye'(event, template) {
@@ -74,42 +81,38 @@ Template.App_home.helpers({
 
 })
 
-function verifyPasswordPolicy(pwdValue) {
-
-  // Initialize counter to zero
-  var counter = 0;
-
-  //numbers check
-  $("#xNumbers").val(pwdValue.replace(/\D/g, '').length);
-
-  //Kleinbuchstaben check
-  if(pwdValue.match(/[a-z]/g)){
-  $("#xKleinbuchstaben").val(pwdValue.match(/[a-z]/g).length);
-  }
-  else{
-    $("#xKleinbuchstaben").val(0);
-  }
-
-  //Grossbuchstaben check
-  if(pwdValue.match(/[A-Z]/g)){
-  $("#xGrossbuchstaben").val(pwdValue.match(/[A-Z]/g).length);
-  }
-  else{
-    $("#xGrossbuchstaben").val(0);
-  }
-
-// check
-if(pwdValue.match(/[ !\"#$%&\'\(\)\*\+,\-\.\/:;<=>?@\[\\\]^_`{|}~]/g)){
-  $("#xSpecial").val(pwdValue.match(/[ !\"#$%&\'\(\)\*\+,\-\.\/:;<=>?@\[\\\]^_`{|}~]/g).length);
-  }
-  else{
-    $("#xSpecial").val(0);
-  }
-
-
-  Session.set("password", pwdValue);
+function verifyPasswordPolicy() {
+  matchCharacters("#xSpecial", /[ !\"#$%&\'\(\)\*\+,\-\.\/:;<=>?@\[\\\]^_`{|}~]/g, "#zspecialChar");
+  matchCharacters("#xKleinbuchstaben", /[a-z]/g, "#zsmallChar");
+  matchCharacters("#xGrossbuchstaben", /[A-Z]/g, "#zbigChar");
+  matchCharacters("#xNumbers", /[0-9]/g, "#zNumbers");
+  matchCharacters("#xUmlaute", /[ä,Ä,ö,Ö,ü,Ü,ß]/g, "#zgermanUmlaut");
+  //matchCharacters("#xUmlaute", /[\u00F0-\u02AF]/g, "#zgermanUmlaut");
 }
 
+/*prüfe Anzahl verschiedener Zeichensätze */
+function matchCharacters(idAnalyse, regex, idPolicy) {
+
+  generateRandomPassword(regex, idPolicy);
+
+  let x = Session.get("password").match(regex);
+  if (x) {
+    $(idAnalyse).val(x.length);
+    checkSpecialPolicy(x.length, idPolicy);
+  } else {
+    $(idAnalyse).val(0);
+    checkSpecialPolicy(0, idPolicy);
+  }
+}
+
+function generateRandomPassword(regex, id) {
+
+  let checkPolicy = parseInt($(id).val());
+
+  for (i = 0; i < checkPolicy; i++) {
+    console.log("Random: " + new RandExp(regex).gen());
+  }
+}
 
 function checkPasswordPolicy() {
 
@@ -120,7 +123,7 @@ function checkPasswordPolicy() {
     }
   });
 
-  if (amount <= 6 ) {
+  if (amount <= 6) {
     $("#amountDiv").removeClass("w3-yellow").removeClass("w3-green");
     $("#amountDiv").addClass("w3-red");
   }
@@ -135,46 +138,23 @@ function checkPasswordPolicy() {
     $("#amountDiv").addClass("w3-green");
   }
 
-  let checkPwd;
-  checkPwd = Session.get("password").replace(/\D/g, '');
-  checkSpecialPolicy(checkPwd.length, $("#zNumbers"));
-
-  checkPwd = Session.get("password").match(/[a-z]/g);
-  if (checkPwd) {
-    checkSpecialPolicy(checkPwd.length, $("#zsmallChar"));
-  }
-
-  checkPwd = Session.get("password").match(/[A-Z]/g);
-  if (checkPwd) {
-    checkSpecialPolicy(checkPwd.length, $("#zbigChar"));
-  }
-
-
-  checkPwd = Session.get("password").match(/[ !\"#$%&\'()*+,-.\/:;<=>?@\[\\]^_`{|}~]/g);
-  if (checkPwd) {
-    checkSpecialPolicy(checkPwd.length, $("#zbigChar"));
-  }
-
-  //[ !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]
-
   Session.set("minCharacterAmount", amount);
 }
 
-function checkSpecialPolicy(length, element) {
+function checkSpecialPolicy(length, id) {
   let checkPwd, checkPolicy;
 
-  //numbers check
-  checkPolicy = parseInt($(element).val());
+  checkPolicy = parseInt($(id).val());
 
   if (checkPolicy > 0) {
     if (length > 0 && length >= checkPolicy) {
-      $(element).parent().removeClass("w3-red").addClass("w3-green");
+      $(id).parent().removeClass("w3-red").addClass("w3-green");
     } else {
-      $(element).parent().removeClass("w3-green").addClass("w3-red");
+      $(id).parent().removeClass("w3-green").addClass("w3-red");
     }
   } else {
     //set input to neutral
-    $(element).parent().removeClass("w3-green").removeClass("w3-red");
+    $(id).parent().removeClass("w3-green").removeClass("w3-red");
   }
 }
 
@@ -206,4 +186,24 @@ function checkCharacterAmount() {
 function permutationCount(length, amount) {
 
   return Math.pow(amount, length);
+}
+
+function shuffle(array) {
+  var currentIndex = array.length,
+    temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
 }

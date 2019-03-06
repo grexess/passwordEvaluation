@@ -19,16 +19,20 @@ Template.pawned.helpers({
 
                 if ( count === -1) {
                     Session.set("pawned", "save password");
+                    $("#pwndDiv").removeClass("w3-red w3-white").addClass("w3-green");
                 } else {
                     var begin = data.substring(count);
                     var all = begin.substring(begin.indexOf(":"));
                     amount =  all.substr(1,all.indexOf("\n"));
-                    Session.set("pawned", amount);
+                    $("#pwndDiv").removeClass("w3-green w3-white").addClass("w3-red");
+                    Session.set("pawned", amount);                    
                 }
 
             });
 
             return Session.get("pawned");
+        } else{
+            $("#pwndDiv").removeClass("w3-green w3-red").addClass("w3-white"); 
         }
     }
 
