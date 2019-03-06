@@ -82,6 +82,21 @@ function verifyPasswordPolicy(pwdValue) {
   //numbers check
   $("#xNumbers").val(pwdValue.replace(/\D/g, '').length);
 
+  //Kleinbuchstaben check
+  if(pwdValue.match(/[a-z]/g)){
+  $("#xKleinbuchstaben").val(pwdValue.match(/[a-z]/g).length);
+  }
+  else{
+    $("#xKleinbuchstaben").val(0);
+  }
+
+  //Grossbuchstaben check
+  if(pwdValue.match(/[A-Z]/g)){
+  $("#xGrossbuchstaben").val(pwdValue.match(/[A-Z]/g).length);
+  }
+  else{
+    $("#xGrossbuchstaben").val(0);
+  }
 
   Session.set("password", pwdValue);
 }
