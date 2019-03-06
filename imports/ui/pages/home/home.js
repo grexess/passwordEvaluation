@@ -98,6 +98,15 @@ function verifyPasswordPolicy(pwdValue) {
     $("#xGrossbuchstaben").val(0);
   }
 
+// check
+if(pwdValue.match(/[ !\"#$%&\'\(\)\*\+,\-\.\/:;<=>?@\[\\\]^_`{|}~]/g)){
+  $("#xSpecial").val(pwdValue.match(/[ !\"#$%&\'\(\)\*\+,\-\.\/:;<=>?@\[\\\]^_`{|}~]/g).length);
+  }
+  else{
+    $("#xSpecial").val(0);
+  }
+
+
   Session.set("password", pwdValue);
 }
 
@@ -126,7 +135,6 @@ function checkPasswordPolicy() {
     $("#amountDiv").addClass("w3-green");
   }
 
-
   let checkPwd;
   checkPwd = Session.get("password").replace(/\D/g, '');
   checkSpecialPolicy(checkPwd.length, $("#zNumbers"));
@@ -140,6 +148,14 @@ function checkPasswordPolicy() {
   if (checkPwd) {
     checkSpecialPolicy(checkPwd.length, $("#zbigChar"));
   }
+
+
+  checkPwd = Session.get("password").match(/[ !\"#$%&\'()*+,-.\/:;<=>?@\[\\]^_`{|}~]/g);
+  if (checkPwd) {
+    checkSpecialPolicy(checkPwd.length, $("#zbigChar"));
+  }
+
+  //[ !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]
 
   Session.set("minCharacterAmount", amount);
 }
