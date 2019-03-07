@@ -51,4 +51,8 @@
 
 *meteor run android-device*
 
+Brute Force:
+Mit dem Betätigen der Stoppuhr wird versucht, das eingegebene Passwort per Brute-Force zu knacken. Um das Progamm vor Abstürzen zu schützen, ist die maximale Passwortlänge auf 5 Zeichen begrenzt.
 
+Passwortgenerator:
+Diese Karte generiert ein zufälliges Passwort, basierend auf die eingegebenen Vorgaben.

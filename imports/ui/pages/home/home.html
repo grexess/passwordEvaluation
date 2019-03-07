@@ -78,7 +78,8 @@
             <div class="w3-row w3-section">
               <div class="w3-col" style="width:50px"><i id="eye" class="w3-xxlarge fas fa-eye"></i></div>
               <div class="w3-rest">
-                <input class="w3-input w3-border" id="password" name="password" type="password" disabled placeholder="Wähle Dein Passwort!">
+                <input class="w3-input w3-border" id="password" name="password" type="password" disabled
+                  placeholder="Wähle Dein Passwort!">
               </div>
 
             </div>
@@ -170,27 +171,27 @@
         <h2>Passwortgenerator</h2>
         <hr>
         <div class="w3-row">
-            <div class="w3-col s3 m3 l3 w3-center"><i id="randomPwd" class="fas fa-dice fa-3x"></i></div>
-            <div class="w3-col s4 m4 l4 w3-center">
-                <p id="randomPWD"></p>
-            </div>
+          <div class="w3-col s3 m3 l3 w3-center"><i id="randomPwd" class="fas fa-dice fa-3x"></i></div>
+          <div class="w3-col s4 m4 l4 w3-center">
+            <p id="randomPWD"></p>
+          </div>
         </div>
-    
+
       </div>
     </div>
     <div class="w3-half">
-      {{> dictionary}}
+      {{> links}}
     </div>
   </div>
 
-
-
-  <div class="w3-row ">
-    <div class="w3-half">
-      {{> pepperandsalt}}
-    </div>
-    <div class="w3-half">
-      {{> links}}
+  <div id="modal" class="w3-modal">
+    <div class="w3-modal-content">
+      <div class="w3-container">
+        <span onclick="document.getElementById('modal').style.display='none'"
+          class="w3-button w3-display-topright">&times;</span>
+        <p>Some text. Some text. Some text.</p>
+        <p>Some text. Some text. Some text.</p>
+      </div>
     </div>
   </div>
 

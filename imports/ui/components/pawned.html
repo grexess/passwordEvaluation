@@ -1,9 +1,34 @@
 <template name="pawned">
         <div id="pwndDiv" class="w3-container w3-card-4 w3-white w3-margin w3-padding-large">
-                <h2>Pwnd (= geleakt)?</h2>
+                <div class="w3-row">
+                        <div class="w3-twothird w3-container">
+                                <h2>Pwnd (= geleakt)?</h2>
+                        </div>
+                        <div class="w3-third w3-container w3-right-align">
+                                <i class="fa fa-bars" 
+                                        onclick="document.getElementById('pwndmodal').style.display='block'"></i>
+                        </div>
+                </div>
                 <div>
                         <label>Passwort gefunden:</label>
                         <input id="bfChar" class="w3-input w3-border" type="text" disabled value="{{pawned}}">
                 </div>
         </div>
+
+        <div id="pwndmodal" class="w3-modal">
+                <div class="w3-modal-content">
+                        <span onclick="document.getElementById('pwndmodal').style.display='none'"
+                                class="w3-button w3-display-topright">&times;</span>
+                        <div class="w3-card-4">
+                                <header class="w3-container w3-theme-d4">
+                                        <h1>Pwnd?</h1>
+                                </header>
+                                <div class="w3-container">
+                                        <p>Diese Karte zeigt an, wie oft das eingegebene Passwort in einem
+                                                Datenleak veröffentlicht wurde.<br>(Quelle: haveibeenpwnd.com) </p>
+                                </div>
+                        </div>
+                </div>
+        </div>
+
 </template>
