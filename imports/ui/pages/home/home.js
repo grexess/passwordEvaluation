@@ -57,6 +57,10 @@ Template.App_home.events({
       $(elem).removeClass("fa-eye").addClass("fa-eye-slash");
       $("#password").prop("type", "text");
     };
+  },
+
+  'click #randomPwdClick'(event, template) {
+    verifyPasswordPolicy();
   }
 
 });
@@ -77,17 +81,27 @@ Template.App_home.helpers({
 
   minCharacterAmount() {
     return Session.get("minCharacterAmount");
+  },
+
+  randomPWD() {
+
+    var aShuffled = shuffle(Session.get("randomPassword"));
+
+    return aShuffled.join("");
   }
 
 })
 
 function verifyPasswordPolicy() {
+
+  Session.set("randomPassword", []);
+
   matchCharacters("#xSpecial", /[ !\"#$%&\'\(\)\*\+,\-\.\/:;<=>?@\[\\\]^_`{|}~]/g, "#zspecialChar");
   matchCharacters("#xKleinbuchstaben", /[a-z]/g, "#zsmallChar");
   matchCharacters("#xGrossbuchstaben", /[A-Z]/g, "#zbigChar");
   matchCharacters("#xNumbers", /[0-9]/g, "#zNumbers");
-  matchCharacters("#xUmlaute", /[ä,Ä,ö,Ö,ü,Ü,ß]/g, "#zgermanUmlaut");
-  //matchCharacters("#xUmlaute", /[\u00F0-\u02AF]/g, "#zgermanUmlaut");
+  matchCharacters("#xUmlaute", /[äÄöÖüÜß]/g, "#zgermanUmlaut");
+  //matchCharacters("#xUmlaute", /[\u00c4\u00e4\u00d6\u00f6\u00dc\u00fc\u00df]/g, "#zgermanUmlaut");
 }
 
 /*prüfe Anzahl verschiedener Zeichensätze */
@@ -107,10 +121,23 @@ function matchCharacters(idAnalyse, regex, idPolicy) {
 
 function generateRandomPassword(regex, id) {
 
+  let array;
   let checkPolicy = parseInt($(id).val());
+  const umlauts = ["ä", "Ä", "ö", "Ö", "ü", "Ü", "ß"];
 
-  for (i = 0; i < checkPolicy; i++) {
-    console.log("Random: " + new RandExp(regex).gen());
+  if (regex.toString() != "/[äÄöÖüÜß]/g") {
+    for (i = 0; i < checkPolicy; i++) {
+      array = Session.get("randomPassword");
+      array.push(new RandExp(regex).gen());
+      Session.set("randomPassword", array);
+    }
+  } else {
+    //manually for umlauts
+    for (i = 0; i < checkPolicy; i++) {
+      array = Session.get("randomPassword");
+      array.push(umlauts[Math.floor(Math.random() * umlauts.length)]);
+      Session.set("randomPassword", array);
+    }
   }
 }
 
